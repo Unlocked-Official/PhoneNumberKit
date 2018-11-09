@@ -21,7 +21,7 @@ public class PhoneNumberTextField: UITextField, UITextFieldDelegate {
     /// Override setText so number will be automatically formatted when setting text by code
     override open var text: String? {
         set {
-            if newValue != nil {
+            if isPartialFormatterEnabled && newValue != nil {
                 let formattedNumber = partialFormatter.formatPartial(newValue! as String)
                 super.text = formattedNumber
             }
