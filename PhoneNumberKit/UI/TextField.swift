@@ -157,7 +157,7 @@ public class PhoneNumberTextField: UITextField, UITextFieldDelegate {
         supportObj.validateOnCharacterChanged = validateOnCharacterChanged
         supportObj.validateOnResign = validateOnResign
         let notify = NotificationCenter.default
-        notify.addObserver(self, selector: #selector(PhoneNumberTextField.didHideKeyboard), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+      notify.addObserver(self, selector: #selector(PhoneNumberTextField.didHideKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     
@@ -455,11 +455,11 @@ public class PhoneNumberTextField: UITextField, UITextFieldDelegate {
     
     func showErrorIconForMsg(_ msg:String) {
         let btnError = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
-        btnError.addTarget(self, action: #selector(PhoneNumberTextField.tapOnError), for: UIControlEvents.touchUpInside)
-        btnError.setBackgroundImage(UIImage(named: "icon_error"), for: UIControlState())
+      btnError.addTarget(self, action: #selector(PhoneNumberTextField.tapOnError), for: UIControl.Event.touchUpInside)
+      btnError.setBackgroundImage(UIImage(named: "icon_error"), for: UIControl.State())
         
         self.rightView = btnError
-        self.rightViewMode = UITextFieldViewMode.always
+      self.rightViewMode = UITextField.ViewMode.always
         strMsg = msg
         self.showErrorWithMsg(strMsg)
     }
@@ -486,9 +486,9 @@ public class PhoneNumberTextField: UITextField, UITextFieldDelegate {
         popUp!.translatesAutoresizingMaskIntoConstraints = false
         let dict = ["v1":popUp!]
         
-        popUp?.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[v1]-0-|", options: NSLayoutFormatOptions(), metrics: nil, views: dict))
+      popUp?.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[v1]-0-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: dict))
         
-        popUp?.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[v1]-0-|", options: NSLayoutFormatOptions(), metrics: nil, views: dict))
+      popUp?.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[v1]-0-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: dict))
         
         supportObj.popUp=popUp
         
@@ -616,12 +616,12 @@ class IQPopUp : UIView {
         var dict:Dictionary<String, AnyObject> = ["img":img]
         
         
-        img.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"H:|-%f-[img(%f)]", fieldFrame!.origin.x+fieldFrame!.size.width-imgframe.size.width+2, imgframe.size.width), options:NSLayoutFormatOptions(), metrics:nil, views:dict))
-        img.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"V:|-%f-[img(%f)]",imgframe.origin.y,imgframe.size.height), options:NSLayoutFormatOptions(),  metrics:nil, views:dict))
+      img.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"H:|-%f-[img(%f)]", fieldFrame!.origin.x+fieldFrame!.size.width-imgframe.size.width+2, imgframe.size.width), options:NSLayoutConstraint.FormatOptions(), metrics:nil, views:dict))
+      img.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"V:|-%f-[img(%f)]",imgframe.origin.y,imgframe.size.height), options:NSLayoutConstraint.FormatOptions(),  metrics:nil, views:dict))
         
         let font = UIFont(name: FontName, size: FontSize)
         
-        var size:CGSize = self.strMsg.boundingRect(with: CGSize(width: fieldFrame!.size.width - (PaddingInErrorPopUp*2), height: 1000), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font:font!], context: nil).size
+      var size:CGSize = self.strMsg.boundingRect(with: CGSize(width: fieldFrame!.size.width - (PaddingInErrorPopUp*2), height: 1000), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font:font!], context: nil).size
         
         
         size = CGSize(width: ceil(size.width), height: ceil(size.height))
@@ -638,9 +638,9 @@ class IQPopUp : UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         dict = ["view":view]
         
-        view.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"H:|-%f-[view(%f)]",fieldFrame!.origin.x+(fieldFrame!.size.width-(size.width + (PaddingInErrorPopUp*2))),size.width+(PaddingInErrorPopUp*2)), options:NSLayoutFormatOptions(), metrics:nil, views:dict))
+      view.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"H:|-%f-[view(%f)]",fieldFrame!.origin.x+(fieldFrame!.size.width-(size.width + (PaddingInErrorPopUp*2))),size.width+(PaddingInErrorPopUp*2)), options:NSLayoutConstraint.FormatOptions(), metrics:nil, views:dict))
         
-        view.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"V:|-%f-[view(%f)]",imgframe.origin.y+imgframe.size.height,size.height+(PaddingInErrorPopUp*2)), options:NSLayoutFormatOptions(),  metrics:nil, views:dict))
+      view.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"V:|-%f-[view(%f)]",imgframe.origin.y+imgframe.size.height,size.height+(PaddingInErrorPopUp*2)), options:NSLayoutConstraint.FormatOptions(),  metrics:nil, views:dict))
         
         let lbl = UILabel(frame: CGRect.zero)
         lbl.font = font
@@ -652,8 +652,8 @@ class IQPopUp : UIView {
         
         lbl.translatesAutoresizingMaskIntoConstraints = false
         dict = ["lbl":lbl]
-        lbl.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"H:|-%f-[lbl(%f)]", PaddingInErrorPopUp, size.width), options:NSLayoutFormatOptions() , metrics:nil, views:dict))
-        lbl.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"V:|-%f-[lbl(%f)]", PaddingInErrorPopUp,size.height), options:NSLayoutFormatOptions(), metrics:nil, views:dict))
+      lbl.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"H:|-%f-[lbl(%f)]", PaddingInErrorPopUp, size.width), options:NSLayoutConstraint.FormatOptions() , metrics:nil, views:dict))
+      lbl.superview?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: String(format:"V:|-%f-[lbl(%f)]", PaddingInErrorPopUp,size.height), options:NSLayoutConstraint.FormatOptions(), metrics:nil, views:dict))
         
         //        self.centerXAnchor.constraint(equalTo: (self.superview?.centerXAnchor)!).isActive = true
         
